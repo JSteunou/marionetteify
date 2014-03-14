@@ -1,7 +1,8 @@
 Marionette = require 'backbone.marionette'
 
+Router = require './router'
+Controller = require './controller'
 
-TodoLayout = require './views/layout/layout'
 
 
 class TodoModule extends Marionette.Module
@@ -16,11 +17,12 @@ class TodoModule extends Marionette.Module
         # affecting other modules
         this._createContainer()
         this._addRegion()
-        this._addLayout()
+        this._startMediator()
 
     onStop: ->
         # remove region & container when stopping
         # unload of module could be important in big app / modules
+        this._stopMediator()
         this._removeRegion()
         this._destroyContainer()
 
@@ -34,8 +36,10 @@ class TodoModule extends Marionette.Module
     _addRegion: ->
         this.app.addRegions todoRegion: '#' + this.todoRegionId
 
-    _addLayout: ->
-        this.app.todoRegion.show new TodoLayout
+    _startMediator: ->
+        this.controller = new Controller todoRegion: this.app.todoRegion
+        router = new Router controller: this.controller
+
 
 
 
@@ -46,7 +50,8 @@ class TodoModule extends Marionette.Module
     _removeRegion: ->
         this.app.removeRegion 'todoRegion'
 
-
+    _stopMediator: ->
+        this.controller.stop()
 
 
 

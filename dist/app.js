@@ -1952,7 +1952,32 @@ Backbone.history.start();
 
 module.exports = app;
 
-},{"./app":11,"./modules/todo/module":14,"backbone":false,"backbone.marionette":false,"jquery":false}],12:[function(require,module,exports){
+},{"./app":11,"./modules/todo/module":15,"backbone":false,"backbone.marionette":false,"jquery":false}],12:[function(require,module,exports){
+var Marionette = require('backbone.marionette');
+
+var TodoLayout = require('./views/layout/layout');
+var TodosCollection = require('./models/todos');
+
+
+
+module.exports = Marionette.Controller.extend({
+
+    onStart: function() {
+        this.todosCollection = new TodosCollection();
+        this.todosCollection.fetch();
+        this.todosLayout = new TodoLayout({todosCollection: this.todosCollection});
+        // TODO: show only on success
+        this.options.todoRegion.show(this.todosLayout);
+    },
+
+
+    filterItems: function(filter) {
+    }
+
+
+});
+
+},{"./models/todos":14,"./views/layout/layout":22,"backbone.marionette":false}],13:[function(require,module,exports){
 var Backbone = require('backbone');
 
 
@@ -1982,7 +2007,7 @@ module.exports = Backbone.Model.extend({
     }
 
 });
-},{"backbone":false}],13:[function(require,module,exports){
+},{"backbone":false}],14:[function(require,module,exports){
 var Backbone = require('backbone');
 Backbone.LocalStorage = require("backbone.localstorage");
 
@@ -2017,14 +2042,16 @@ module.exports = Backbone.Collection.extend({
     }
 
 });
-},{"./todo":12,"backbone":false,"backbone.localstorage":1}],14:[function(require,module,exports){
-var Marionette, TodoLayout, TodoModule,
+},{"./todo":13,"backbone":false,"backbone.localstorage":1}],15:[function(require,module,exports){
+var Controller, Marionette, Router, TodoModule,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
 Marionette = require('backbone.marionette');
 
-TodoLayout = require('./views/layout/layout');
+Router = require('./router');
+
+Controller = require('./controller');
 
 TodoModule = (function(_super) {
   __extends(TodoModule, _super);
@@ -2040,10 +2067,11 @@ TodoModule = (function(_super) {
   TodoModule.prototype.onStart = function() {
     this._createContainer();
     this._addRegion();
-    return this._addLayout();
+    return this._startMediator();
   };
 
   TodoModule.prototype.onStop = function() {
+    this._stopMediator();
     this._removeRegion();
     return this._destroyContainer();
   };
@@ -2061,8 +2089,14 @@ TodoModule = (function(_super) {
     });
   };
 
-  TodoModule.prototype._addLayout = function() {
-    return this.app.todoRegion.show(new TodoLayout);
+  TodoModule.prototype._startMediator = function() {
+    var router;
+    this.controller = new Controller({
+      todoRegion: this.app.todoRegion
+    });
+    return router = new Router({
+      controller: this.controller
+    });
   };
 
   TodoModule.prototype._destroyContainer = function() {
@@ -2075,6 +2109,10 @@ TodoModule = (function(_super) {
     return this.app.removeRegion('todoRegion');
   };
 
+  TodoModule.prototype._stopMediator = function() {
+    return this.controller.stop();
+  };
+
   return TodoModule;
 
 })(Marionette.Module);
@@ -2082,7 +2120,27 @@ TodoModule = (function(_super) {
 module.exports = TodoModule;
 
 
-},{"./views/layout/layout":20,"backbone.marionette":false}],15:[function(require,module,exports){
+},{"./controller":12,"./router":16,"backbone.marionette":false}],16:[function(require,module,exports){
+var Marionette = require('backbone.marionette');
+
+
+
+module.exports = Marionette.AppRouter.extend({
+
+    // extend AppRouter to tell the controller
+    // when the router is ok
+    constructor: function(options) {
+        Marionette.AppRouter.prototype.constructor.call(this, options);
+        this._getController().triggerMethod('start');
+    },
+
+
+    appRoutes: {
+        '*filter': 'filterItems'
+    }
+
+});
+},{"backbone.marionette":false}],17:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -2115,7 +2173,7 @@ function program1(depth0,data) {
   return buffer;
   });
 
-},{"hbsfy/runtime":10}],16:[function(require,module,exports){
+},{"hbsfy/runtime":10}],18:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 var tpl = require('./footer.hbs');
@@ -2179,7 +2237,7 @@ module.exports = Marionette.ItemView.extend({
     }
 
 });
-},{"./footer.hbs":15,"backbone.marionette":false}],17:[function(require,module,exports){
+},{"./footer.hbs":17,"backbone.marionette":false}],19:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -2191,7 +2249,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<h1>todos</h1>\n<form>\n    <input id=\"new-todo\" placeholder=\"What needs to be done?\" autofocus>\n</form>";
   });
 
-},{"hbsfy/runtime":10}],18:[function(require,module,exports){
+},{"hbsfy/runtime":10}],20:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 var tpl = require('./header.hbs');
@@ -2226,7 +2284,7 @@ module.exports = Marionette.ItemView.extend({
     }
 
 });
-},{"./header.hbs":17,"backbone.marionette":false}],19:[function(require,module,exports){
+},{"./header.hbs":19,"backbone.marionette":false}],21:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -2238,7 +2296,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<section id=\"todoapp\">\n    <header id=\"header\"></header>\n    <section id=\"main\"></section>\n    <footer id=\"footer\"></footer>\n</section>\n<footer id=\"info\">\n    <p>Double-click to edit a todo</p>\n    <p>Written by <a href=\"https://github.com/JSteunou\">Jérôme Steunou</a> based on <a href=\"https://github.com/addyosmani\">Addy Osmani TodoMVC project</a></p>\n</footer>";
   });
 
-},{"hbsfy/runtime":10}],20:[function(require,module,exports){
+},{"hbsfy/runtime":10}],22:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 
@@ -2277,7 +2335,7 @@ module.exports = Marionette.Layout.extend({
 
 });
 
-},{"../../models/todos":13,"../todos/collection":22,"./footer/footer":16,"./header/header":18,"./layout.hbs":19,"backbone.marionette":false}],21:[function(require,module,exports){
+},{"../../models/todos":14,"../todos/collection":24,"./footer/footer":18,"./header/header":20,"./layout.hbs":21,"backbone.marionette":false}],23:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -2289,7 +2347,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<input id=\"toggle-all\" type=\"checkbox\">\n<label for=\"toggle-all\">Mark all as complete</label>\n<ul id=\"todo-list\"></ul>";
   });
 
-},{"hbsfy/runtime":10}],22:[function(require,module,exports){
+},{"hbsfy/runtime":10}],24:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 var TodoItemView = require('./item');
@@ -2345,7 +2403,7 @@ module.exports = Marionette.CompositeView.extend({
     }
 
 });
-},{"./collection.hbs":21,"./item":24,"backbone.marionette":false}],23:[function(require,module,exports){
+},{"./collection.hbs":23,"./item":26,"backbone.marionette":false}],25:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -2374,7 +2432,7 @@ function program1(depth0,data) {
   return buffer;
   });
 
-},{"hbsfy/runtime":10}],24:[function(require,module,exports){
+},{"hbsfy/runtime":10}],26:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 var tpl = require('./item.hbs');
@@ -2456,4 +2514,4 @@ module.exports = Marionette.ItemView.extend({
 });
 
 
-},{"./item.hbs":23,"backbone.marionette":false}]},{},[11])
+},{"./item.hbs":25,"backbone.marionette":false}]},{},[11])
