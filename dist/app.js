@@ -36,8 +36,41 @@ TodoModule = (function(_super) {
     return TodoModule.__super__.constructor.apply(this, arguments);
   }
 
+  TodoModule.prototype.initialize = function() {
+    return this.todoRegionId = 'todo-region';
+  };
+
   TodoModule.prototype.onStart = function() {
-    return console.log('===== started');
+    this._createContainer();
+    return this._addRegion();
+  };
+
+  TodoModule.prototype.onStop = function() {
+    this._removeRegion();
+    return this._destroyContainer();
+  };
+
+  TodoModule.prototype._createContainer = function() {
+    var node;
+    node = document.createElement('div');
+    node.id = this.todoRegionId;
+    return document.body.appendChild(node);
+  };
+
+  TodoModule.prototype._createRegion = function() {
+    return this.app.addRegions({
+      todoRegion: '#' + this.todoRegionId
+    });
+  };
+
+  TodoModule.prototype._destroyContainer = function() {
+    var node;
+    node = document.getElementById(this.todoRegionId);
+    return node != null ? node.parentElement.removeChild(node) : void 0;
+  };
+
+  TodoModule.prototype._removeRegion = function() {
+    return this.app.removeRegion('todoRegion');
   };
 
   return TodoModule;
