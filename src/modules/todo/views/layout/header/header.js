@@ -12,16 +12,17 @@ module.exports = Marionette.ItemView.extend({
     },
 
     events: {
-        'keypress @ui.input': 'onInputKeypress'
+        'submit form': 'onSubmit'
     },
 
 
 
-    onInputKeypress: function (e) {
-        var ENTER_KEY = 13,
-        todoText = this.ui.input.val().trim();
+    onSubmit: function (e) {
+        // prevent form orignal submit
+        e.preventDefault();
 
-        if (e.which === ENTER_KEY && todoText) {
+        var todoText = this.ui.input.val().trim();
+        if (todoText) {
             this.collection.create({
                 title: todoText
             });
