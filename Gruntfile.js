@@ -11,7 +11,7 @@ module.exports = function (grunt) {
             },
             app: {
                 src: 'src/kernel.js',
-                dest: 'dist/bundle.js',
+                dest: 'dist/app.js',
                 options: {
                     external: vendors
                 }
