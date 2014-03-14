@@ -5,6 +5,13 @@ var tpl = require('./layout.hbs');
 
 module.exports = Marionette.Layout.extend({
 
-    template: tpl
+    template: tpl,
+
+    regions: {
+        header:     '#header',
+        main:       '#main',
+        footer:     '#footer'
+    }
+
 
 });

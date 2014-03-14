@@ -517,7 +517,7 @@ TodoModule = (function(_super) {
   }
 
   TodoModule.prototype.initialize = function() {
-    return this.todoRegionId = 'todo-region';
+    return this.todoRegionId = 'todo-module-region';
   };
 
   TodoModule.prototype.onStart = function() {
@@ -574,7 +574,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<section id=\"todoapp\">\n    <header id=\"header\">\n        <h1>todos</h1>\n        <input id=\"new-todo\" placeholder=\"What needs to be done?\" autofocus>\n    </header>\n    <section id=\"main\">\n        <input id=\"toggle-all\" type=\"checkbox\">\n        <label for=\"toggle-all\">Mark all as complete</label>\n        <ul id=\"todo-list\"></ul>\n    </section>\n    <footer id=\"footer\"></footer>\n</section>\n<footer id=\"info\">\n    <p>Double-click to edit a todo</p>\n    <p>Written by <a href=\"https://github.com/JSteunou\">Jérôme Steunou</a> based on <a href=\"https://github.com/addyosmani\">Addy Osmani TodoMVC project</a></p>\n</footer>\n";
+  return "<section id=\"todoapp\">\n    <header id=\"header\"></header>\n    <section id=\"main\"></section>\n    <footer id=\"footer\"></footer>\n</section>\n<footer id=\"info\">\n    <p>Double-click to edit a todo</p>\n    <p>Written by <a href=\"https://github.com/JSteunou\">Jérôme Steunou</a> based on <a href=\"https://github.com/addyosmani\">Addy Osmani TodoMVC project</a></p>\n</footer>";
   });
 
 },{"hbsfy/runtime":8}],12:[function(require,module,exports){
@@ -585,7 +585,14 @@ var tpl = require('./layout.hbs');
 
 module.exports = Marionette.Layout.extend({
 
-    template: tpl
+    template: tpl,
+
+    regions: {
+        header:     '#header',
+        main:       '#main',
+        footer:     '#footer'
+    }
+
 
 });
 
