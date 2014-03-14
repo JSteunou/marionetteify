@@ -43,7 +43,8 @@ module.exports = function (grunt) {
                 options: {
                     hostname: '127.0.0.1',
                     open: true,
-                    useAvailablePort: true
+                    useAvailablePort: true,
+                    livereload: true
                 }
             }
         }
