@@ -1,6 +1,8 @@
 Marionette = require 'backbone.marionette'
 
 
+TodoLayout = require './views/layout/layout'
+
 
 class TodoModule extends Marionette.Module
 
@@ -11,6 +13,7 @@ class TodoModule extends Marionette.Module
     onStart: ->
         this._createContainer()
         this._addRegion()
+        this._addLayout()
 
     onStop: ->
         this._removeRegion()
@@ -23,8 +26,11 @@ class TodoModule extends Marionette.Module
         node.id = this.todoRegionId
         document.body.appendChild node
 
-    _createRegion: ->
+    _addRegion: ->
         this.app.addRegions todoRegion: '#' + this.todoRegionId
+
+    _addLayout: () ->
+        this.app.todoRegion.show(new TodoLayout)
 
 
 
