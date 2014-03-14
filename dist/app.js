@@ -601,15 +601,13 @@ function program1(depth0,data) {
 },{"hbsfy/runtime":8}],12:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
-
 var tpl = require('./footer.hbs');
+
 
 
 module.exports = Marionette.ItemView.extend({
 
-    template: tpl,
-
-
+    template: tpl
 
 });
 },{"./footer.hbs":11,"backbone.marionette":false}],13:[function(require,module,exports){

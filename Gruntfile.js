@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
 
-    var vendors = 'jquery backbone backbone.marionette'.split(' ');
+    var vendors = 'jquery backbone backbone.marionette backbone.localstorage'.split(' ');
 
     grunt.initConfig({
 
