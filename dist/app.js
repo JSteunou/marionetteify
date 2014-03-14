@@ -1972,6 +1972,8 @@ module.exports = Marionette.Controller.extend({
 
 
     filterItems: function(filter) {
+        filter = (filter && filter.trim() || 'all');
+        this.todosLayout.updateFilter(filter);
     }
 
 
@@ -2199,12 +2201,6 @@ module.exports = Marionette.ItemView.extend({
         activeCountLabel: (this.activeCount === 1 ? 'item' : 'items') + ' left'
     },
 
-
-
-    initialize: function () {
-        // this.listenTo(App.vent, 'todoList:filter', this.updateFilterSelection, this);
-    },
-
     serializeData: function () {
         var active = this.collection.getActive().length;
         var total = this.collection.length;
@@ -2216,17 +2212,10 @@ module.exports = Marionette.ItemView.extend({
         };
     },
 
+
+
     onRender: function () {
         this.$el.parent().toggle(this.collection.length > 0);
-        this.updateFilterSelection();
-    },
-
-    // TODO: move this to router or controller
-    updateFilterSelection: function () {
-        this.ui.filters
-            .removeClass('selected')
-            .filter('[href="' + (location.hash || '#') + '"]')
-            .addClass('selected');
     },
 
     onClearClick: function () {
@@ -2303,13 +2292,16 @@ var Marionette = require('backbone.marionette');
 var HeaderView = require('./header/header');
 var TodosView = require('../todos/collection');
 var FooterView = require('./footer/footer');
-var TodosCollection = require('../../models/todos');
 var tpl = require('./layout.hbs');
 
 
 
 module.exports = Marionette.Layout.extend({
     template: tpl,
+
+    ui: {
+        app: '#todoapp'
+    },
 
     regions: {
         header:     '#header',
@@ -2319,14 +2311,14 @@ module.exports = Marionette.Layout.extend({
 
 
 
-    initialize: function() {
-        this.todosCollection = new TodosCollection();
+    updateFilter: function(filter) {
+        this.ui.app.attr('class', 'filter-' + filter);
     },
 
 
 
     onShow: function() {
-        var options = {collection: this.todosCollection};
+        var options = {collection: this.options.todosCollection};
 
         this.header.show(new HeaderView(options));
         this.main.show(new TodosView(options));
@@ -2335,7 +2327,7 @@ module.exports = Marionette.Layout.extend({
 
 });
 
-},{"../../models/todos":14,"../todos/collection":24,"./footer/footer":18,"./header/header":20,"./layout.hbs":21,"backbone.marionette":false}],23:[function(require,module,exports){
+},{"../todos/collection":24,"./footer/footer":18,"./header/header":20,"./layout.hbs":21,"backbone.marionette":false}],23:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

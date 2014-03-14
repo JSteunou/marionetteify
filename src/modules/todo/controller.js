@@ -17,6 +17,8 @@ module.exports = Marionette.Controller.extend({
 
 
     filterItems: function(filter) {
+        filter = (filter && filter.trim() || 'all');
+        this.todosLayout.updateFilter(filter);
     }
 
 

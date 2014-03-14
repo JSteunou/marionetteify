@@ -23,12 +23,6 @@ module.exports = Marionette.ItemView.extend({
         activeCountLabel: (this.activeCount === 1 ? 'item' : 'items') + ' left'
     },
 
-
-
-    initialize: function () {
-        // this.listenTo(App.vent, 'todoList:filter', this.updateFilterSelection, this);
-    },
-
     serializeData: function () {
         var active = this.collection.getActive().length;
         var total = this.collection.length;
@@ -40,17 +34,10 @@ module.exports = Marionette.ItemView.extend({
         };
     },
 
+
+
     onRender: function () {
         this.$el.parent().toggle(this.collection.length > 0);
-        this.updateFilterSelection();
-    },
-
-    // TODO: move this to router or controller
-    updateFilterSelection: function () {
-        this.ui.filters
-            .removeClass('selected')
-            .filter('[href="' + (location.hash || '#') + '"]')
-            .addClass('selected');
     },
 
     onClearClick: function () {

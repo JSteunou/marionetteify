@@ -7,3 +7,9 @@
 #footer {
     display: none;
 }
+
+#todoapp.filter-all #filters li a[href="#"],
+#todoapp.filter-active #filters li a[href="#active"],
+#todoapp.filter-completed #filters li a[href="#completed"] {
+    font-weight: bold;
+}
