@@ -36,7 +36,9 @@ module.exports = Marionette.ItemView.extend({
 
 
 
-    onRender: function () {
+    // use onShow rather than onRender because DOM is not ready
+    // and this.$el find or parent will return nothing
+    onShow: function () {
         this.$el.parent().toggle(this.collection.length > 0);
     },
 

@@ -28,8 +28,9 @@ module.exports = Marionette.CompositeView.extend({
     },
 
 
-
-    onRender: function () {
+    // use onShow rather than onRender because DOM is not ready
+    // and this.$el find or parent will return nothing
+    onShow: function () {
         this.update();
     },
 

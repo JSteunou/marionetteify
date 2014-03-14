@@ -21,5 +21,4 @@ module.exports = Marionette.Controller.extend({
         this.todosLayout.updateFilter(filter);
     }
 
-
 });

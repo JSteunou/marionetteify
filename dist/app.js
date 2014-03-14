@@ -1976,7 +1976,6 @@ module.exports = Marionette.Controller.extend({
         this.todosLayout.updateFilter(filter);
     }
 
-
 });
 
 },{"./models/todos":14,"./views/layout/layout":22,"backbone.marionette":false}],13:[function(require,module,exports){
@@ -2214,7 +2213,9 @@ module.exports = Marionette.ItemView.extend({
 
 
 
-    onRender: function () {
+    // use onShow rather than onRender because DOM is not ready
+    // and this.$el find or parent will return nothing
+    onShow: function () {
         this.$el.parent().toggle(this.collection.length > 0);
     },
 
@@ -2370,8 +2371,9 @@ module.exports = Marionette.CompositeView.extend({
     },
 
 
-
-    onRender: function () {
+    // use onShow rather than onRender because DOM is not ready
+    // and this.$el find or parent will return nothing
+    onShow: function () {
         this.update();
     },
 
