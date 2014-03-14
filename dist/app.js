@@ -565,7 +565,54 @@ TodoModule = (function(_super) {
 module.exports = TodoModule;
 
 
-},{"./views/layout/layout":12,"backbone.marionette":false}],11:[function(require,module,exports){
+},{"./views/layout/layout":14,"backbone.marionette":false}],11:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var Handlebars = require('hbsfy/runtime');
+module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  
+  return "class=\"hidden\"";
+  }
+
+  buffer += "<span id=\"todo-count\">\n    <strong>";
+  if (helper = helpers.activeCount) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.activeCount); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</strong> ";
+  if (helper = helpers.activeCountLabel) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.activeCountLabel); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\n</span>\n<ul id=\"filters\">\n    <li>\n        <a href=\"#\">All</a>\n    </li>\n    <li>\n        <a href=\"#active\">Active</a>\n    </li>\n    <li>\n        <a href=\"#completed\">Completed</a>\n    </li>\n</ul>\n<button id=\"clear-completed\" ";
+  stack1 = helpers.unless.call(depth0, (depth0 && depth0.completedCount), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">\n    Clear completed (";
+  if (helper = helpers.completedCount) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.completedCount); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + ")\n</button>";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":8}],12:[function(require,module,exports){
+var Marionette = require('backbone.marionette');
+
+
+var tpl = require('./footer.hbs');
+
+
+module.exports = Marionette.ItemView.extend({
+
+    template: tpl,
+
+
+
+});
+},{"./footer.hbs":11,"backbone.marionette":false}],13:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -577,10 +624,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<section id=\"todoapp\">\n    <header id=\"header\"></header>\n    <section id=\"main\"></section>\n    <footer id=\"footer\"></footer>\n</section>\n<footer id=\"info\">\n    <p>Double-click to edit a todo</p>\n    <p>Written by <a href=\"https://github.com/JSteunou\">Jérôme Steunou</a> based on <a href=\"https://github.com/addyosmani\">Addy Osmani TodoMVC project</a></p>\n</footer>";
   });
 
-},{"hbsfy/runtime":8}],12:[function(require,module,exports){
+},{"hbsfy/runtime":8}],14:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 
+var FooterView = require('./footer/footer');
 var tpl = require('./layout.hbs');
 
 module.exports = Marionette.Layout.extend({
@@ -591,9 +639,13 @@ module.exports = Marionette.Layout.extend({
         header:     '#header',
         main:       '#main',
         footer:     '#footer'
+    },
+
+    onShow: function() {
+        this.footer.show(new FooterView());
     }
 
 
 });
 
-},{"./layout.hbs":11,"backbone.marionette":false}]},{},[9])
+},{"./footer/footer":12,"./layout.hbs":13,"backbone.marionette":false}]},{},[9])
