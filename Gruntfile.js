@@ -6,11 +6,11 @@ module.exports = function (grunt) {
 
         browserify: {
             options: {
-                extensions: [ '.coffee', '.js' ],
-                transform: ['coffeeify']
+                extensions: ['.js', '.coffee'],
+                transform: ['coffeeify', 'hbsfy']
             },
             app: {
-                src: 'src/kernel.js',
+                src: 'src/app.js',
                 dest: 'dist/app.js',
                 options: {
                     external: vendors
