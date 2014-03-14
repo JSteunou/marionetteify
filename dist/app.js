@@ -1964,10 +1964,12 @@ module.exports = Marionette.Controller.extend({
 
     onStart: function() {
         this.todosCollection = new TodosCollection();
-        this.todosCollection.fetch();
         this.todosLayout = new TodoLayout({todosCollection: this.todosCollection});
-        // TODO: show only on success
-        this.options.todoRegion.show(this.todosLayout);
+
+        var onSuccess = function() {
+            this.options.todoRegion.show(this.todosLayout);
+        }.bind(this);
+        this.todosCollection.fetch({success: onSuccess});
     },
 
 
@@ -2211,12 +2213,16 @@ module.exports = Marionette.ItemView.extend({
         };
     },
 
-
+    // use onRender only for update after
+    // first render / show
+    onRender: function() {
+        this.update();
+    },
 
     // use onShow rather than onRender because DOM is not ready
     // and this.$el find or parent will return nothing
     onShow: function () {
-        this.$el.parent().toggle(this.collection.length > 0);
+        this.update();
     },
 
     onClearClick: function () {
@@ -2224,6 +2230,10 @@ module.exports = Marionette.ItemView.extend({
         completed.forEach(function (todo) {
             todo.destroy();
         });
+    },
+
+    update: function() {
+        this.$el.parent().toggle(this.collection.length > 0);
     }
 
 });
