@@ -9,10 +9,12 @@ module.exports = Marionette.Controller.extend({
 
     onStart: function() {
         this.todosCollection = new TodosCollection();
-        this.todosCollection.fetch();
         this.todosLayout = new TodoLayout({todosCollection: this.todosCollection});
-        // TODO: show only on success
-        this.options.todoRegion.show(this.todosLayout);
+
+        var onSuccess = function() {
+            this.options.todoRegion.show(this.todosLayout);
+        }.bind(this);
+        this.todosCollection.fetch({success: onSuccess});
     },
 
 
