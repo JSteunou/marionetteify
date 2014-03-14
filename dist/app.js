@@ -2145,6 +2145,7 @@ var Marionette = require('backbone.marionette');
 var tpl = require('./header.hbs');
 
 
+
 module.exports = Marionette.ItemView.extend({
 
     template: tpl,
@@ -2190,12 +2191,14 @@ var Marionette = require('backbone.marionette');
 
 
 var HeaderView = require('./header/header');
+var TodosView = require('../todos/collection');
 var FooterView = require('./footer/footer');
 var TodosCollection = require('../../models/todos');
 var tpl = require('./layout.hbs');
 
-module.exports = Marionette.Layout.extend({
 
+
+module.exports = Marionette.Layout.extend({
     template: tpl,
 
     regions: {
@@ -2204,6 +2207,8 @@ module.exports = Marionette.Layout.extend({
         footer:     '#footer'
     },
 
+
+
     initialize: function() {
         this.todosCollection = new TodosCollection();
     },
@@ -2211,11 +2216,192 @@ module.exports = Marionette.Layout.extend({
 
 
     onShow: function() {
-        this.header.show(new HeaderView({collection: this.todosCollection}));
-        this.footer.show(new FooterView({collection: this.todosCollection}));
-    }
+        var options = {collection: this.todosCollection};
 
+        this.header.show(new HeaderView(options));
+        this.main.show(new TodosView(options));
+        this.footer.show(new FooterView(options));
+    }
 
 });
 
-},{"../../models/todos":13,"./footer/footer":16,"./header/header":18,"./layout.hbs":19,"backbone.marionette":false}]},{},[11])
+},{"../../models/todos":13,"../todos/collection":22,"./footer/footer":16,"./header/header":18,"./layout.hbs":19,"backbone.marionette":false}],21:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var Handlebars = require('hbsfy/runtime');
+module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<input id=\"toggle-all\" type=\"checkbox\">\n<label for=\"toggle-all\">Mark all as complete</label>\n<ul id=\"todo-list\"></ul>";
+  });
+
+},{"hbsfy/runtime":10}],22:[function(require,module,exports){
+var Marionette = require('backbone.marionette');
+
+var TodoItemView = require('./item');
+var tpl = require('./collection.hbs');
+
+
+
+// Item List View
+// --------------
+//
+// Controls the rendering of the list of items, including the
+// filtering of activs vs completed items for display.
+module.exports = Marionette.CompositeView.extend({
+    template: tpl,
+    itemView: TodoItemView,
+    itemViewContainer: '#todo-list',
+
+    ui: {
+        toggle: '#toggle-all'
+    },
+
+    events: {
+        'click #toggle-all': 'onToggleAllClick'
+    },
+
+    collectionEvents: {
+        'all': 'update'
+    },
+
+
+
+    onRender: function () {
+        this.update();
+    },
+
+    update: function () {
+        function reduceCompleted(left, right) {
+            return left && right.get('completed');
+        }
+
+        var allCompleted = this.collection.reduce(reduceCompleted, true);
+
+        this.ui.toggle.prop('checked', allCompleted);
+        this.$el.parent().toggle(!!this.collection.length);
+    },
+
+    onToggleAllClick: function (e) {
+        var isChecked = e.currentTarget.checked;
+
+        this.collection.each(function (todo) {
+            todo.save({ 'completed': isChecked });
+        });
+    }
+
+});
+},{"./collection.hbs":21,"./item":24,"backbone.marionette":false}],23:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var Handlebars = require('hbsfy/runtime');
+module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, self=this, functionType="function", escapeExpression=this.escapeExpression;
+
+function program1(depth0,data) {
+  
+  
+  return "checked";
+  }
+
+  buffer += "<div class=\"view\">\n    <input class=\"toggle\" type=\"checkbox\" ";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.completed), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ">\n    <label>";
+  if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</label>\n    <button class=\"destroy\"></button>\n</div>\n<input class=\"edit\" value=\"";
+  if (helper = helpers.title) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.title); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":10}],24:[function(require,module,exports){
+var Marionette = require('backbone.marionette');
+
+var tpl = require('./item.hbs');
+
+
+
+// Todo List Item View
+// -------------------
+//
+// Display an individual todo item, and respond to changes
+// that are made to the item, including marking completed.
+module.exports = Marionette.ItemView.extend({
+    tagName: 'li',
+    template: tpl,
+
+    ui: {
+        edit: '.edit'
+    },
+
+    events: {
+        'click .destroy':   'destroy',
+        'click .toggle':    'toggle',
+        'dblclick label':   'onEditClick',
+        'keydown .edit':    'onEditKeypress',
+        'focusout .edit':   'onEditFocusout'
+    },
+
+    modelEvents: {
+        'change': 'render'
+    },
+
+    onRender: function () {
+        this.$el.removeClass('active completed');
+
+        if (this.model.get('completed')) {
+            this.$el.addClass('completed');
+        } else {
+            this.$el.addClass('active');
+        }
+    },
+
+    destroy: function () {
+        this.model.destroy();
+    },
+
+    toggle: function () {
+        this.model.toggle().save();
+    },
+
+    onEditClick: function () {
+        this.$el.addClass('editing');
+        this.ui.edit.focus();
+        this.ui.edit.val(this.ui.edit.val());
+    },
+
+    onEditFocusout: function () {
+        var todoText = this.ui.edit.val().trim();
+        if (todoText) {
+            this.model.set('title', todoText).save();
+            this.$el.removeClass('editing');
+        } else {
+            this.destroy();
+        }
+    },
+
+    onEditKeypress: function (e) {
+        var ENTER_KEY = 13, ESC_KEY = 27;
+
+        if (e.which === ENTER_KEY) {
+            this.onEditFocusout();
+            return;
+        }
+
+        if (e.which === ESC_KEY) {
+            this.ui.edit.val(this.model.get('title'));
+            this.$el.removeClass('editing');
+        }
+    }
+});
+
+
+},{"./item.hbs":23,"backbone.marionette":false}]},{},[11])

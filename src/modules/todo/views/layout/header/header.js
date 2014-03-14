@@ -3,6 +3,7 @@ var Marionette = require('backbone.marionette');
 var tpl = require('./header.hbs');
 
 
+
 module.exports = Marionette.ItemView.extend({
 
     template: tpl,

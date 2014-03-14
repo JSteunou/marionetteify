@@ -2,12 +2,14 @@ var Marionette = require('backbone.marionette');
 
 
 var HeaderView = require('./header/header');
+var TodosView = require('../todos/collection');
 var FooterView = require('./footer/footer');
 var TodosCollection = require('../../models/todos');
 var tpl = require('./layout.hbs');
 
-module.exports = Marionette.Layout.extend({
 
+
+module.exports = Marionette.Layout.extend({
     template: tpl,
 
     regions: {
@@ -16,6 +18,8 @@ module.exports = Marionette.Layout.extend({
         footer:     '#footer'
     },
 
+
+
     initialize: function() {
         this.todosCollection = new TodosCollection();
     },
@@ -23,9 +27,11 @@ module.exports = Marionette.Layout.extend({
 
 
     onShow: function() {
-        this.header.show(new HeaderView({collection: this.todosCollection}));
-        this.footer.show(new FooterView({collection: this.todosCollection}));
-    }
+        var options = {collection: this.todosCollection};
 
+        this.header.show(new HeaderView(options));
+        this.main.show(new TodosView(options));
+        this.footer.show(new FooterView(options));
+    }
 
 });
