@@ -64,7 +64,7 @@ module.exports = function (grunt) {
                 interrupt: true
             },
             src: {
-                files: ['src/**/*'],
+                files: ['src/**/*', '!src/index.html'],
                 tasks: ['browserify:app'],
             },
             index: {
