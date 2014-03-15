@@ -26,15 +26,21 @@ module.exports = function (grunt) {
 
         watch: {
             options: {
-                livereload: true
+                livereload: true,
+                spawn: false,
+                interrupt: true
             },
             src: {
-                files: ['src/**/*', 'index.html'],
+                files: ['src/**/*'],
                 tasks: ['browserify:app'],
                 options: {
-                    spawn: false,
-                    interrupt: true
                 }
+            },
+            index: {
+                files: ['index.html']
+            },
+            assets: {
+                files: ['assets/**/*']
             }
         },
 
@@ -57,6 +63,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('build', ['browserify']);
-    grunt.registerTask('run',   ['connect', 'watch:src']);
+    grunt.registerTask('run',   ['connect', 'watch']);
 
 };
