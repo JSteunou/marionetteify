@@ -6,7 +6,6 @@ var Marionette = require('backbone.marionette');
 
 
 // Local
-var app = require('./app');
 var TodoModule = require('./modules/todo/module');
 
 
