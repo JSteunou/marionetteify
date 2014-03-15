@@ -48,6 +48,13 @@ module.exports = function (grunt) {
             }
         },
 
+        uglify: {
+            bundle: {
+                src: 'dist/bundle.js',
+                dest: 'dist/bundle.js'
+            }
+        },
+
 
 
         watch: {
@@ -85,11 +92,12 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-targethtml');
 
     grunt.registerTask('builddev', ['browserify:app', 'browserify:vendors', 'targethtml:dev']);
-    grunt.registerTask('buildprod', ['browserify:bundle', 'targethtml:prod']);
+    grunt.registerTask('buildprod', ['browserify:bundle', 'uglify', 'targethtml:prod']);
     grunt.registerTask('run',   ['builddev', 'connect', 'watch']);
 
 };
