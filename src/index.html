@@ -8,12 +8,14 @@
     </head>
     <body>
 
-        
+        <!--(if target dev)><!-->
         <script src="dist/vendors.js"></script>
         <script src="dist/app.js"></script>
-        
+        <!--<!(endif)-->
 
-        
+        <!--(if target prod)><!-->
+        <script src="dist/bundle.js"></script>
+        <!--<!(endif)-->
     </body>
 </html>
 

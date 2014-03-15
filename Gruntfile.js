@@ -5,15 +5,18 @@ module.exports = function (grunt) {
     grunt.initConfig({
 
         browserify: {
+            // just the app
             app: {
                 src: 'src/app.js',
                 dest: 'dist/app.js',
                 options: {
-                    extensions: ['.js', '.coffee', '.hbs'],
+                    debug: true,
+                    extensions: ['.coffee', '.hbs'],
                     transform: ['coffeeify', 'hbsfy'],
                     external: vendors
                 }
             },
+            // just vendors
             vendors: {
                 files: {
                     'dist/vendors.js': []
@@ -21,8 +24,31 @@ module.exports = function (grunt) {
                 options: {
                     'require': vendors
                 }
+            },
+            // bundle all in one
+            bundle: {
+                src: 'src/app.js',
+                dest: 'dist/bundle.js',
+                options: {
+                    extensions: ['.coffee', '.hbs'],
+                    transform: ['coffeeify', 'hbsfy']
+                }
             }
         },
+
+        // produce index.html by target
+        targethtml: {
+            dev: {
+                src: 'src/index.html',
+                dest: 'index.html'
+            },
+            prod: {
+                src: 'src/index.html',
+                dest: 'index.html'
+            }
+        },
+
+
 
         watch: {
             options: {
@@ -33,11 +59,10 @@ module.exports = function (grunt) {
             src: {
                 files: ['src/**/*'],
                 tasks: ['browserify:app'],
-                options: {
-                }
             },
             index: {
-                files: ['index.html']
+                files: ['src/index.html'],
+                tasks: ['targethtml:dev']
             },
             assets: {
                 files: ['assets/**/*']
@@ -61,8 +86,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-targethtml');
 
-    grunt.registerTask('build', ['browserify']);
-    grunt.registerTask('run',   ['connect', 'watch']);
+    grunt.registerTask('builddev', ['browserify:app', 'browserify:vendors', 'targethtml:dev']);
+    grunt.registerTask('buildprod', ['browserify:bundle', 'targethtml:prod']);
+    grunt.registerTask('run',   ['builddev', 'connect', 'watch']);
 
 };
