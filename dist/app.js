@@ -921,7 +921,7 @@ module.exports = Marionette.CompositeView.extend({
     },
 
     events: {
-        'click #toggle-all': 'onToggleAllClick'
+        'click @ui.toggle': 'onToggleAllClick'
     },
 
     collectionEvents: {
@@ -955,6 +955,7 @@ module.exports = Marionette.CompositeView.extend({
     }
 
 });
+
 },{"./collection.hbs":21,"./item":24,"backbone.marionette":false}],23:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
@@ -1005,11 +1006,11 @@ module.exports = Marionette.ItemView.extend({
     },
 
     events: {
-        'click .destroy':   'destroy',
-        'click .toggle':    'toggle',
-        'dblclick label':   'onEditClick',
-        'keydown .edit':    'onEditKeypress',
-        'focusout .edit':   'onEditFocusout'
+        'click .destroy':       'destroy',
+        'click .toggle':        'toggle',
+        'dblclick label':       'onEditClick',
+        'keydown  @ui.edit':    'onEditKeypress',
+        'focusout @ui.edit':    'onEditFocusout'
     },
 
     modelEvents: {

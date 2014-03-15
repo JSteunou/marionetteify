@@ -18,11 +18,11 @@ module.exports = Marionette.ItemView.extend({
     },
 
     events: {
-        'click .destroy':   'destroy',
-        'click .toggle':    'toggle',
-        'dblclick label':   'onEditClick',
-        'keydown .edit':    'onEditKeypress',
-        'focusout .edit':   'onEditFocusout'
+        'click .destroy':       'destroy',
+        'click .toggle':        'toggle',
+        'dblclick label':       'onEditClick',
+        'keydown  @ui.edit':    'onEditKeypress',
+        'focusout @ui.edit':    'onEditFocusout'
     },
 
     modelEvents: {

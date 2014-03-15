@@ -20,7 +20,7 @@ module.exports = Marionette.CompositeView.extend({
     },
 
     events: {
-        'click #toggle-all': 'onToggleAllClick'
+        'click @ui.toggle': 'onToggleAllClick'
     },
 
     collectionEvents: {
