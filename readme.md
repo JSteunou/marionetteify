@@ -46,7 +46,7 @@ Because I do not need the A of AMD -if you build a single file at the end you ne
 ## Step by step walkthrough
 
 * [Introduction](http://www.jeromesteunou.net/recipe-for-marionette-handlebars-browserify-grunt.html)
-* [Browserify](http://www.jeromesteunou.net/browserify-why-and-how.html)
+* [npm & Browserify](http://www.jeromesteunou.net/browserify-why-and-how.html)
 * Grunt
 * Marionettes modules
 * i18n with Jed
