@@ -56,6 +56,35 @@ module.exports = function (grunt) {
         },
 
 
+        ////////////////
+        // i18n tasks //
+        ////////////////
+
+        xgettext: {
+            target: {
+                files: {
+                    handlebars: ["src/**/*.hbs"],
+                    javascript: ["src/**/*.js"]
+                },
+                options: {
+                    functionName: "gtt",
+                    potFile: "translations/messages.pot"
+                }
+            }
+        },
+
+        po2json: {
+            target: {
+                src: ["translations/*.po"],
+                dest: "translations/"
+            }
+        },
+
+
+
+        ////////////////////////////
+        // run & livereload tasks //
+        ////////////////////////////
 
         watch: {
             options: {
@@ -94,7 +123,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-po2json');
     grunt.loadNpmTasks('grunt-targethtml');
+    grunt.loadNpmTasks('grunt-xgettext');
 
     grunt.registerTask('builddev', ['browserify:app', 'browserify:vendors', 'targethtml:dev']);
     grunt.registerTask('buildprod', ['browserify:bundle', 'uglify', 'targethtml:prod']);

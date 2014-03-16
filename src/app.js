@@ -6,10 +6,8 @@ var Marionette = require('backbone.marionette');
 
 
 // Local
+require('./helpers/gettext');
 var TodoModule = require('./modules/todo/module');
-
-var services = require('./services/services');
-console.log('=======', services);
 
 
 
