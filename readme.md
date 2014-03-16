@@ -45,13 +45,20 @@ Because I do not need the A of AMD -if you build a single file at the end you ne
 
 ## Step by step walkthrough
 
-Very soon on my blog!
+* [Introduction](http://www.jeromesteunou.net/recipe-for-marionette-handlebars-browserify-grunt.html)
+* [Browserify](http://www.jeromesteunou.net/browserify-why-and-how.html)
+* Grunt
+* Marionettes modules
+* i18n with Jed
+* less /css
+* Cordova (deploy to iOS / Android)
 
 
 ## Roadmap
 
 * 0.2.0 i18n with [Jed](http://slexaxton.github.io/Jed/), pot / po generation, singular / plural support
 * 0.3.0 less integration, better css dividing: each view its css, its module its assets
+* 0.4.0 Cordova
 
 
 ## One more thing
