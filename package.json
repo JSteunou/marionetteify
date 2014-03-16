@@ -21,7 +21,8 @@
     "grunt-contrib-uglify": "^0.4.0",
     "grunt-targethtml": "^0.2.6",
     "grunt-xgettext": "git+https://github.com/JSteunou/grunt-xgettext.git",
-    "grunt-po2json": "^0.2.0"
+    "grunt-po2json": "^0.2.0",
+    "underscore": "^1.6.0"
   },
   "private": true
 }

@@ -1,4 +1,5 @@
 var Jed = require('jed');
+var _ = require('underscore');
 
 
 var en = require('../../translations/en');
@@ -16,7 +17,7 @@ module.exports = {
      */
     gtt: function(singular, plural, n) {
         var tr = this.i18n.translate(singular);
-        if (plural) {
+        if (_.isString(plural) && _.isNumber(n))  {
             return tr.ifPlural(n, plural).fetch(n);
         } else {
             return tr.fetch();

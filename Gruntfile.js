@@ -76,7 +76,11 @@ module.exports = function (grunt) {
         po2json: {
             target: {
                 src: ["translations/*.po"],
-                dest: "translations/"
+                dest: "translations/",
+                options: {
+                    pretty: true,
+                    format: 'jed'
+                }
             }
         },
 

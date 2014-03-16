@@ -1,3 +1,6 @@
+var _ = require('underscore');
+
+
 var config = require('../config');
 
 
@@ -11,18 +14,8 @@ var LS_KEY = 'marionetteify-lng';
  * @return {Boolean}
  */
 var isAuthorized = function(lng) {
-    var found = false;
-    if (config.languages) {
-        // no Array.indexOf on IE8
-        for (var i = config.languages.length - 1; i >= 0; i--) {
-            if (config.languages[i] === lng) {
-                found = true;
-                break;
-            }
-        }
-    }
-
-    return found;
+    // no Array.indexOf on IE8
+    return _.indexOf(config.languages, lng) > -1;
 };
 
 
