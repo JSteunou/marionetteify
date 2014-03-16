@@ -8,6 +8,9 @@ var Marionette = require('backbone.marionette');
 // Local
 var TodoModule = require('./modules/todo/module');
 
+var services = require('./services/services');
+console.log('=======', services);
+
 
 
 // app bootstrap

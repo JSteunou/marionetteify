@@ -1,4 +1,6 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"lU+fRx":[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"backbone.localstorage":[function(require,module,exports){
+module.exports=require('lU+fRx');
+},{}],"lU+fRx":[function(require,module,exports){
 /**
  * Backbone localStorage Adapter
  * Version 1.1.7
@@ -222,9 +224,7 @@ Backbone.sync = function(method, model, options) {
 return Backbone.LocalStorage;
 }));
 
-},{"backbone":"5kFNoY","underscore":3}],"backbone.localstorage":[function(require,module,exports){
-module.exports=require('lU+fRx');
-},{}],3:[function(require,module,exports){
+},{"backbone":"5kFNoY","underscore":3}],3:[function(require,module,exports){
 //     Underscore.js 1.4.4
 //     http://underscorejs.org
 //     (c) 2009-2013 Jeremy Ashkenas, DocumentCloud Inc.
@@ -1452,6 +1452,8 @@ module.exports=require('lU+fRx');
 
 }).call(this);
 
+},{}],"backbone.marionette":[function(require,module,exports){
+module.exports=require('tDBCJ+');
 },{}],"tDBCJ+":[function(require,module,exports){
 // MarionetteJS (Backbone.Marionette)
 // ----------------------------------
@@ -3601,9 +3603,7 @@ _.extend(Marionette.Module, {
 
 }));
 
-},{"backbone":"5kFNoY","backbone.babysitter":6,"backbone.wreqr":7,"underscore":8}],"backbone.marionette":[function(require,module,exports){
-module.exports=require('tDBCJ+');
-},{}],6:[function(require,module,exports){
+},{"backbone":"5kFNoY","backbone.babysitter":6,"backbone.wreqr":7,"underscore":8}],6:[function(require,module,exports){
 // Backbone.BabySitter
 // -------------------
 // v0.1.0
@@ -5409,6 +5409,8 @@ Wreqr.EventAggregator = (function(Backbone, _){
   }
 }).call(this);
 
+},{}],"backbone":[function(require,module,exports){
+module.exports=require('5kFNoY');
 },{}],"5kFNoY":[function(require,module,exports){
 //     Backbone.js 1.1.2
 
@@ -7019,9 +7021,7 @@ Wreqr.EventAggregator = (function(Backbone, _){
 
 }));
 
-},{"underscore":11}],"backbone":[function(require,module,exports){
-module.exports=require('5kFNoY');
-},{}],11:[function(require,module,exports){
+},{"underscore":11}],11:[function(require,module,exports){
 module.exports=require(8)
 },{}],"jquery":[function(require,module,exports){
 module.exports=require('HlZQrA');
