@@ -2,7 +2,6 @@ var Jed = require('jed');
 var _ = require('underscore');
 
 
-var en = require('../../translations/en');
 var fr = require('../../translations/fr');
 
 

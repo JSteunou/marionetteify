@@ -1,5 +1,6 @@
 module.exports = function (grunt) {
 
+    var config = require('./src/config.json');
     var vendors = 'jquery backbone backbone.marionette backbone.localstorage'.split(' ');
 
     grunt.initConfig({
@@ -13,7 +14,8 @@ module.exports = function (grunt) {
                     debug: true,
                     extensions: ['.coffee', '.hbs'],
                     transform: ['coffeeify', 'hbsfy'],
-                    external: vendors
+                    external: vendors,
+                    require: config.languages.map(function(lng) { return './translations/' + lng; })
                 }
             },
             // just vendors
@@ -22,7 +24,7 @@ module.exports = function (grunt) {
                     'dist/vendors.js': []
                 },
                 options: {
-                    'require': vendors
+                    require: vendors
                 }
             },
             // bundle all in one
