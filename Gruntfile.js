@@ -5,6 +5,10 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
 
+        /////////////////
+        // build tasks //
+        /////////////////
+
         browserify: {
             // just the app
             app: {
@@ -86,6 +90,26 @@ module.exports = function (grunt) {
             }
         },
 
+        shell: {
+            options: {
+                failOnError: true
+            },
+            msgmerge: {
+                command: config.languages.map(function(lng) {
+                    var po = "translations/" + lng + ".po";
+                    return "if [ -f \"" + po + "\" ]; then\n" +
+                           "    echo \"Updating " + po + "\"\n" +
+                           "    msgmerge " + po + " translations/messages.pot > .new.po.tmp\n" +
+                           "    exitCode=$?\n" +
+                           "    if [ $exitCode -ne 0 ]; then\n" +
+                           "        echo \"Msgmerge failed with exit code $?\"\n" +
+                           "        exit $exitCode\n" +
+                           "    fi\n" +
+                           "    mv .new.po.tmp " + po + "\n" +
+                           "fi\n";
+                }).join("")
+            }
+        },
 
 
         ////////////////////////////
@@ -106,8 +130,8 @@ module.exports = function (grunt) {
                 files: ['src/index.html'],
                 tasks: ['targethtml:dev']
             },
-            assets: {
-                files: ['assets/**/*']
+            others: {
+                files: ['assets/**/*', 'translations/*.json']
             }
         },
 
@@ -122,7 +146,6 @@ module.exports = function (grunt) {
             }
         }
 
-
     });
 
     grunt.loadNpmTasks('grunt-browserify');
@@ -130,11 +153,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-po2json');
+    grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-targethtml');
     grunt.loadNpmTasks('grunt-xgettext');
 
     grunt.registerTask('builddev', ['browserify:app', 'browserify:vendors', 'targethtml:dev']);
     grunt.registerTask('buildprod', ['browserify:bundle', 'uglify', 'targethtml:prod']);
     grunt.registerTask('run',   ['builddev', 'connect', 'watch']);
+    grunt.registerTask('updatepos', ['xgettext', 'shell']);
 
 };

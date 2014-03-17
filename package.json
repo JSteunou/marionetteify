@@ -22,7 +22,8 @@
     "grunt-targethtml": "^0.2.6",
     "grunt-xgettext": "git+https://github.com/JSteunou/grunt-xgettext.git",
     "grunt-po2json": "^0.2.0",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "grunt-shell": "^0.6.4"
   },
   "private": true
 }

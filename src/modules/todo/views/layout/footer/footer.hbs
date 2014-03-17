@@ -1,17 +1,17 @@
 <span id="todo-count">
-    <strong>{{ activeCount }}</strong> {{ activeCountLabel }}
+    {{{gtt '<strong>%d</strong> item left' '<strong>%d</strong> items left' activeCount }}}
 </span>
 <ul id="filters">
     <li>
-        <a href="#">All</a>
+        <a href="#">{{gtt 'All' }}</a>
     </li>
     <li>
-        <a href="#active">Active</a>
+        <a href="#active">{{gtt 'Active' }}</a>
     </li>
     <li>
-        <a href="#completed">Completed</a>
+        <a href="#completed">{{gtt 'Completed' }}</a>
     </li>
 </ul>
 <button id="clear-completed" {{#unless completedCount }}class="hidden"{{/unless }}>
-    Clear completed ({{ completedCount }})
+    {{gtt 'Clear completed' }} ({{ completedCount }})
 </button>

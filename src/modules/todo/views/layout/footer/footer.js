@@ -19,9 +19,9 @@ module.exports = Marionette.ItemView.extend({
         'all': 'render'
     },
 
-    templateHelpers: {
-        activeCountLabel: (this.activeCount === 1 ? 'item' : 'items') + ' left'
-    },
+    // templateHelpers: {
+    //     activeCountLabel: (this.activeCount === 1 ? 'item' : 'items') + ' left'
+    // },
 
     serializeData: function () {
         var active = this.collection.getActive().length;

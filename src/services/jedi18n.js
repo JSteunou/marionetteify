@@ -14,12 +14,12 @@ module.exports = {
      * Shortcut to Jed API
      * @param  {String} singular    singular key
      * @param  {String} [plural]    plural key
-     * @param  {Number} [n]         plural number
+     * @param  {Number} [n]         plural number. Mandatory if plural key.
      * @return {String}             translation
      */
     gtt: function(singular, plural, n) {
         var tr = this.i18n.translate(singular);
-        if (_.isString(plural) && _.isNumber(n))  {
+        if (_.isString(plural) && _.isNumber(n)) {
             return tr.ifPlural(n, plural).fetch(n);
         } else {
             return tr.fetch();

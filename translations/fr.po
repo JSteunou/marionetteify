@@ -3,14 +3,40 @@ msgstr ""
 "Project-Id-Version: marionetteify\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Jérôme Steunou <contact@jeromesteunou.net>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr\n"
+
+msgid "<strong>%d</strong> item left"
+msgid_plural "<strong>%d</strong> items left"
+msgstr[0] "<strong>%d</strong> tâche restante"
+msgstr[1] "<strong>%d</strong> tâches restantes"
+
+msgid "All"
+msgstr "Tous"
+
+msgid "Active"
+msgstr "En cours"
+
+msgid "Completed"
+msgstr "Terminés"
+
+msgid "Clear completed"
+msgstr "Effacer les terminés"
+
+msgid "todos"
+msgstr "todos"
+
+msgid "What needs to be done?"
+msgstr "Qu'est-ce qui est à faire ?"
 
 msgid "Double-click to edit a todo"
 msgstr "Double clic pour éditer un todo"
+
+msgid "Mark all as complete"
+msgstr "Tout clôturer"
