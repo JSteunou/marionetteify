@@ -2,11 +2,14 @@ var Jed = require('jed');
 var _ = require('underscore');
 
 
-var fr = require('../../translations/fr');
+var languageService = require('./language');
 
+
+
+var pojson = require('./translations/' + languageService.get());
 
 module.exports = {
-    i18n: new Jed(fr),
+    i18n: new Jed(pojson),
     /**
      * Shortcut to Jed API
      * @param  {String} singular    singular key
