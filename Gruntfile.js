@@ -73,7 +73,7 @@ module.exports = function (grunt) {
                     javascript: ["src/**/*.js"]
                 },
                 options: {
-                    functionName: "gtt",
+                    functionName: ["gtt", "ngtt"],
                     potFile: "translations/messages.pot"
                 }
             }

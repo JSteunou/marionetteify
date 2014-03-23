@@ -8,15 +8,17 @@ var languageService = require('./language');
 
 var pojson = require('./translations/' + languageService.get());
 var jedi18n = new Jed(pojson);
+_.bindAll(jedi18n, 'gettext', 'ngettext');
 
-
-function gettext() {
-    jedi18n.gettext.apply(jedi18n, arguments);
+// Jed gettext proxy to be able to call it directly
+// or call specialized methods
+function gettext(singular) {
+    return jedi18n.gettext(singular);
 }
-
-gettext.gettext  = _.bind(jedi18n.gettext, jedi18n);
-gettext.ngettext = _.bind(jedi18n.ngettext, jedi18n);
-
+gettext.gettext  = jedi18n.gettext;
+gettext.ngettext = function(singular, plural, n) {
+    return Jed.sprintf(jedi18n.ngettext(singular, plural, n), n);
+};
 
 
 module.exports = gettext;
