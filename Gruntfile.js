@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
 
     var config = require('./src/config.json');
-    var vendors = 'jquery backbone backbone.marionette backbone.localstorage jed hbsfy/runtime'.split(' ');
+    var vendors = 'jquery underscore backbone backbone.marionette backbone.localstorage jed hbsfy/runtime'.split(' ');
 
     grunt.initConfig({
 
