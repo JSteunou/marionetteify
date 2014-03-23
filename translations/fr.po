@@ -12,11 +12,6 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "<strong>%d</strong> item left"
-msgid_plural "<strong>%d</strong> items left"
-msgstr[0] "<strong>%d</strong> tâche restante"
-msgstr[1] "<strong>%d</strong> tâches restantes"
-
 msgid "All"
 msgstr "Tous"
 
@@ -28,6 +23,11 @@ msgstr "Terminés"
 
 msgid "Clear completed"
 msgstr "Effacer les terminés"
+
+msgid "<strong>%d</strong> item left"
+msgid_plural "<strong>%d</strong> items left"
+msgstr[0] "<strong>%d</strong> tâche restante"
+msgstr[1] "<strong>%d</strong> tâches restantes"
 
 msgid "todos"
 msgstr "todos"
